@@ -19,7 +19,7 @@ class Model(nn.Module):
         self.device = torch.device('cpu' if args.cpu else 'cuda')
         self.n_GPUs = args.n_GPUs
         self.save_models = args.save_models
-        os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+        # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
         module = import_module('model.' + args.model.lower())
         self.model = module.make_model(args).to(self.device)
@@ -35,6 +35,9 @@ class Model(nn.Module):
             cpu=args.cpu
         )
         if args.print_model: print(self.model)
+        # compute parameter
+        parameter = self.count_parameters(self.model)
+        print("The number of Parameters is {}".format(parameter))
 
     def forward(self, x, idx_scale):
         self.idx_scale = idx_scale
@@ -63,6 +66,9 @@ class Model(nn.Module):
     def state_dict(self, **kwargs):
         target = self.get_model()
         return target.state_dict(**kwargs)
+    
+    def count_parameters(self, model):
+        return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
     def save(self, apath, epoch, is_best=False):
         target = self.get_model()

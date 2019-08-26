@@ -34,5 +34,19 @@ class Benchmark(srdata.SRData):
     def _set_filesystem(self, dir_data):
         self.apath = os.path.join(dir_data, 'benchmark', self.args.data_test)
         self.dir_hr = os.path.join(self.apath, 'HR')
-        self.dir_lr = os.path.join(self.apath, 'LR_bicubic')
+        # self.dir_lr = os.path.join(self.apath, 'LR_bicubic')
         self.ext = '.png'
+
+        if self.args.lr_downsample == 'bicubic':
+            self.dir_lr = os.path.join(self.apath, 'LR_bicubic')
+        elif self.args.lr_downsample == 'bilinear':
+            self.dir_lr = os.path.join(self.apath, 'LR_bilinear')
+        elif self.args.lr_downsample == 'blur':
+            self.dir_lr = os.path.join(self.apath, 'LR_blur')
+        elif self.args.lr_downsample == 'DN':
+            self.dir_lr = os.path.join(self.apath, 'LR_DN')
+        elif self.args.lr_downsample == 'nearest':
+            self.dir_lr = os.path.join(self.apath, 'LR_nearest')
+        else:
+            print("it doesn't contain the downsample data, maybe it was something wrong.")
+            raise EOFError

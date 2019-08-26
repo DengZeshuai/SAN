@@ -19,7 +19,7 @@ parser.add_argument('--seed', type=int, default=1,
                     help='random seed')
 
 # Data specifications
-parser.add_argument('--dir_data', type=str, default='/home/daitao/code_158/superresolution/SR_dataset',
+parser.add_argument('--dir_data', type=str, default='/home/datasets/sr/',
                     help='dataset directory')
 parser.add_argument('--dir_demo', type=str, default='../test',
                     help='demo image directory')
@@ -35,8 +35,10 @@ parser.add_argument('--n_val', type=int, default=10,
                     help='number of validation set')
 parser.add_argument('--offset_val', type=int, default=800,
                     help='validation index offest')
-parser.add_argument('--ext', type=str, default='sep',
+parser.add_argument('--ext', type=str, default='img',
                     help='dataset file extension')
+parser.add_argument('--lr_downsample', default='bicubic', 
+                    help='choose the corresponding LR data in benchmark')
 
 parser.add_argument('--patch_size', type=int, default=192,
                     help='output patch size')

@@ -102,7 +102,7 @@ class Trainer():
                             sr, hr, scale, self.args.rgb_range,
                             benchmark=self.loader_test.dataset.benchmark
                         )
-                        save_list.extend([lr, hr])
+                        # save_list.extend([lr, hr])
 
                     if self.args.save_results:
                         #self.ckp.save_results(filename, save_list, scale)

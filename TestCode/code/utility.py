@@ -47,9 +47,9 @@ class checkpoint():
 
         if args.load == '.':
             if args.save == '.': args.save = now
-            self.dir = '../SR/' + args.degradation + '/' + args.save
+            self.dir = args.save #'../SR/' + args.degradation + '/' + args.save
         else:
-            self.dir = '../experiment/' + args.load
+            self.dir = args.load # '../experiment/' + args.load
             if not os.path.exists(self.dir):
                 args.load = '.'
             else:
@@ -65,7 +65,7 @@ class checkpoint():
 
         _make_dir(self.dir)
         
-        _make_dir(self.dir + '/' + args.testset + '/x' + str(args.scale[0]))
+        # _make_dir(self.dir + '/' + args.testset + '/x' + str(args.scale[0]))
 
         open_type = 'a' if os.path.exists(self.dir + '/log.txt') else 'w'
         self.log_file = open(self.dir + '/log.txt', open_type)
@@ -128,12 +128,12 @@ class checkpoint():
 
     def save_results_nopostfix(self, filename, save_list, scale):
         #print(filename)
-        if self.args.degradation == 'BI':
-            filename = filename.replace("LRBI", self.args.save)
-        elif self.args.degradation == 'BD':
-            filename = filename.replace("LRBD", self.args.save)
+        apath = '{}/results/{}/x{}'.format(self.dir, self.args.data_test, scale)
+        if not os.path.exists(apath):
+            os.makedirs(apath)
+        filename = os.path.join(apath, filename)
         
-        filename = '{}/{}/x{}/{}'.format(self.dir, self.args.testset, scale, filename)
+        # filename = '{}/{}/x{}/{}'.format(self.dir, self.args.testset, scale, filename)
         postfix = ('SR', 'LR', 'HR')
         for v, p in zip(save_list, postfix):
             normalized = v[0].data.mul(255 / self.args.rgb_range)
